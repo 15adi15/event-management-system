@@ -1,7 +1,14 @@
 import { Router } from 'express'
+import {
+  registerForEvent,
+  getMyRegistrations,
+  cancelRegistration,
+} from '../controllers/registrationController.js'
+import { requireAuth } from '../middleware/authMiddleware.js'
 
 const router = Router()
-router.get('/', (_request, response) => response.json([]))
-router.post('/', (_request, response) => response.status(501).json({ message: 'Event registration is not implemented yet.' }))
+router.post('/', requireAuth, registerForEvent)
+router.get('/', requireAuth, getMyRegistrations)
+router.delete('/:id', requireAuth, cancelRegistration)
 
 export default router
